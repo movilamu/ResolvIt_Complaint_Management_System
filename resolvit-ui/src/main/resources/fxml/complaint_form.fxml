@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ResolvIt - Complaint Form
+  Form for submitting new complaints with validation
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.ComplaintFormController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="Submit New Complaint" styleClass="top-bar-title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox alignment="CENTER">
+                <padding>
+                    <Insets top="32" bottom="32"/>
+                </padding>
+
+                <!-- Form Card -->
+                <VBox styleClass="card" maxWidth="700" spacing="24">
+                    <padding>
+                        <Insets top="32" right="40" bottom="32" left="40"/>
+                    </padding>
+
+                    <!-- Form Header -->
+                    <VBox spacing="8">
+                        <Label text="New Complaint" styleClass="label-title"/>
+                        <Label text="Please fill in all required fields (*) to submit your complaint"
+                               styleClass="label-secondary"/>
+                    </VBox>
+
+                    <!-- Form Fields -->
+                    <VBox spacing="20">
+                        <!-- Title -->
+                        <VBox styleClass="form-group">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Title *" styleClass="form-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="titleCharCount" text="0/200"
+                                       styleClass="char-counter"/>
+                            </HBox>
+                            <TextField fx:id="titleField"
+                                       promptText="Brief title describing your issue (min 10 characters)"
+                                       styleClass="text-field"/>
+                            <Label fx:id="titleError" styleClass="form-error"
+                                   visible="false" managed="false"/>
+                        </VBox>
+
+                        <!-- Description -->
+                        <VBox styleClass="form-group">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Description *" styleClass="form-label"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="descCharCount" text="0/1000"
+                                       styleClass="char-counter"/>
+                            </HBox>
+                            <TextArea fx:id="descriptionField"
+                                      promptText="Detailed description of your complaint (min 30 characters)"
+                                      styleClass="text-area"
+                                      prefRowCount="5" wrapText="true"/>
+                            <Label fx:id="descriptionError" styleClass="form-error"
+                                   visible="false" managed="false"/>
+                        </VBox>
+
+                        <!-- Category and Priority Row -->
+                        <HBox spacing="20">
+                            <!-- Category -->
+                            <VBox styleClass="form-group" HBox.hgrow="ALWAYS">
+                                <Label text="Category *" styleClass="form-label"/>
+                                <ComboBox fx:id="categoryComboBox"
+                                          promptText="Select category"
+                                          styleClass="combo-box"
+                                          prefWidth="Infinity"/>
+                                <Label fx:id="categoryError" styleClass="form-error"
+                                       visible="false" managed="false"/>
+                            </VBox>
+
+                            <!-- Priority -->
+                            <VBox styleClass="form-group" HBox.hgrow="ALWAYS">
+                                <Label text="Priority *" styleClass="form-label"/>
+                                <ComboBox fx:id="priorityComboBox"
+                                          promptText="Select priority"
+                                          styleClass="combo-box"
+                                          prefWidth="Infinity"/>
+                                <Label fx:id="priorityError" styleClass="form-error"
+                                       visible="false" managed="false"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Anonymous Toggle -->
+                        <HBox alignment="CENTER_LEFT" spacing="12">
+                            <CheckBox fx:id="anonymousCheckbox"/>
+                            <VBox spacing="2">
+                                <Label text="Submit anonymously" styleClass="form-label"/>
+                                <Label text="Your identity will be hidden from admins viewing this complaint"
+                                       styleClass="form-hint"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- File Attachment -->
+                        <VBox styleClass="form-group" spacing="12">
+                            <Label text="Attachment (optional)" styleClass="form-label"/>
+                            
+                            <!-- Drop Zone -->
+                            <VBox fx:id="dropZone" styleClass="drop-zone"
+                                  onDragOver="#onDragOver"
+                                  onDragDropped="#onDragDropped"
+                                  onDragExited="#onDragExited"
+                                  onMouseClicked="#onBrowseClick">
+                                <Label text="Drop file here or click to browse"
+                                       styleClass="drop-zone-text"/>
+                                <Label text="Accepted: JPG, PNG, PDF (Max 5MB)"
+                                       styleClass="form-hint"/>
+                            </VBox>
+                            
+                            <!-- Selected File Preview -->
+                            <HBox fx:id="filePreview" visible="false" managed="false"
+                                  alignment="CENTER_LEFT" spacing="12"
+                                  styleClass="card" style="-fx-padding: 12;">
+                                <VBox HBox.hgrow="ALWAYS">
+                                    <Label fx:id="fileName" styleClass="form-label"/>
+                                    <Label fx:id="fileSize" styleClass="form-hint"/>
+                                </VBox>
+                                <Button fx:id="removeFileBtn" text="Remove"
+                                        onAction="#onRemoveFile"
+                                        styleClass="btn-danger"/>
+                            </HBox>
+                            
+                            <Label fx:id="fileError" styleClass="form-error"
+                                   visible="false" managed="false"/>
+                        </VBox>
+
+                        <!-- Error Message -->
+                        <HBox fx:id="errorContainer" visible="false" managed="false"
+                              alignment="CENTER" styleClass="form-error">
+                            <padding>
+                                <Insets top="8" bottom="8"/>
+                            </padding>
+                            <Label fx:id="errorLabel" styleClass="text-danger"/>
+                        </HBox>
+
+                        <!-- Submit Button -->
+                        <HBox spacing="12" alignment="CENTER_RIGHT">
+                            <Button text="Cancel" onAction="#onBackClick"
+                                    styleClass="btn-secondary"/>
+                            <Button fx:id="submitButton" text="SUBMIT COMPLAINT"
+                                    onAction="#onSubmitClick"
+                                    styleClass="btn-primary"
+                                    disable="true"/>
+                        </HBox>
+
+                        <!-- Loading Indicator -->
+                        <HBox fx:id="loadingContainer" visible="false" managed="false"
+                              alignment="CENTER" spacing="8">
+                            <ProgressIndicator prefWidth="24" prefHeight="24"
+                                               styleClass="loading-spinner"/>
+                            <Label text="Submitting complaint..." styleClass="loading-text"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

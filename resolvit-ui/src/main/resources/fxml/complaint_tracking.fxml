@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ResolvIt - Complaint Tracking
+  Shows detailed complaint info with status timeline
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.ComplaintTrackingController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="Track Complaint" styleClass="top-bar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="trackingNumber" text="" styleClass="label-subtitle"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox spacing="24">
+                <padding>
+                    <Insets top="32" right="32" bottom="32" left="32"/>
+                </padding>
+
+                <!-- Status Timeline -->
+                <VBox styleClass="card" spacing="24">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                    
+                    <Label text="Status Timeline" styleClass="label-subtitle"/>
+                    
+                    <!-- Timeline Stepper -->
+                    <HBox fx:id="timelineContainer" alignment="CENTER" spacing="0"
+                          styleClass="timeline-container">
+                        <!-- Step 1: Submitted -->
+                        <VBox alignment="CENTER" styleClass="timeline-step">
+                            <StackPane fx:id="step1Circle" styleClass="timeline-step-circle">
+                                <Label text="1"/>
+                            </StackPane>
+                            <Label text="Submitted" styleClass="timeline-step-label"/>
+                            <Label fx:id="step1Date" text="" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <Region fx:id="connector1" styleClass="timeline-connector"
+                                HBox.hgrow="ALWAYS"/>
+                        
+                        <!-- Step 2: Assigned -->
+                        <VBox alignment="CENTER" styleClass="timeline-step">
+                            <StackPane fx:id="step2Circle" styleClass="timeline-step-circle">
+                                <Label text="2"/>
+                            </StackPane>
+                            <Label text="Assigned" styleClass="timeline-step-label"/>
+                            <Label fx:id="step2Date" text="" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <Region fx:id="connector2" styleClass="timeline-connector"
+                                HBox.hgrow="ALWAYS"/>
+                        
+                        <!-- Step 3: In Progress -->
+                        <VBox alignment="CENTER" styleClass="timeline-step">
+                            <StackPane fx:id="step3Circle" styleClass="timeline-step-circle">
+                                <Label text="3"/>
+                            </StackPane>
+                            <Label text="In Progress" styleClass="timeline-step-label"/>
+                            <Label fx:id="step3Date" text="" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <Region fx:id="connector3" styleClass="timeline-connector"
+                                HBox.hgrow="ALWAYS"/>
+                        
+                        <!-- Step 4: Resolved -->
+                        <VBox alignment="CENTER" styleClass="timeline-step">
+                            <StackPane fx:id="step4Circle" styleClass="timeline-step-circle">
+                                <Label text="4"/>
+                            </StackPane>
+                            <Label text="Resolved" styleClass="timeline-step-label"/>
+                            <Label fx:id="step4Date" text="" styleClass="form-hint"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+
+                <!-- Complaint Details -->
+                <VBox styleClass="card" spacing="20">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                    
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Complaint Details" styleClass="label-subtitle"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="statusBadge" text="" styleClass="status-badge"/>
+                    </HBox>
+                    
+                    <!-- Details Grid -->
+                    <GridPane hgap="24" vgap="16">
+                        <!-- Title -->
+                        <Label text="Title:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label fx:id="titleLabel" text="" wrapText="true"
+                               GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                        
+                        <!-- Category -->
+                        <Label text="Category:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label fx:id="categoryLabel" text=""
+                               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        
+                        <!-- Priority -->
+                        <Label text="Priority:" styleClass="form-label"
+                               GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <Label fx:id="priorityLabel" text=""
+                               GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                        
+                        <!-- Submitted Date -->
+                        <Label text="Submitted:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label fx:id="submittedDateLabel" text=""
+                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                        
+                        <!-- Last Updated -->
+                        <Label text="Last Updated:" styleClass="form-label"
+                               GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <Label fx:id="updatedDateLabel" text=""
+                               GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                        
+                        <!-- Assigned To -->
+                        <Label text="Assigned To:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <Label fx:id="assignedToLabel" text="Not yet assigned"
+                               GridPane.columnIndex="1" GridPane.rowIndex="3"
+                               GridPane.columnSpan="3"/>
+
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="100"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                            <ColumnConstraints minWidth="100"/>
+                            <ColumnConstraints hgrow="ALWAYS"/>
+                        </columnConstraints>
+                    </GridPane>
+                    
+                    <!-- Description -->
+                    <VBox spacing="8">
+                        <Label text="Description:" styleClass="form-label"/>
+                        <TextArea fx:id="descriptionArea" editable="false"
+                                  wrapText="true" prefRowCount="4"
+                                  styleClass="text-area"/>
+                    </VBox>
+                    
+                    <!-- Attachment -->
+                    <HBox fx:id="attachmentContainer" visible="false" managed="false"
+                          alignment="CENTER_LEFT" spacing="12">
+                        <Label text="Attachment:" styleClass="form-label"/>
+                        <Hyperlink fx:id="attachmentLink" text=""
+                                   onAction="#onViewAttachment"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Remarks History -->
+                <VBox styleClass="card" spacing="16">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+                    
+                    <Label text="Remarks History" styleClass="label-subtitle"/>
+                    
+                    <VBox fx:id="remarksContainer" spacing="12">
+                        <!-- Remarks will be added dynamically -->
+                        <Label fx:id="noRemarksLabel" text="No remarks yet"
+                               styleClass="text-muted"/>
+                    </VBox>
+                </VBox>
+
+                <!-- Actions (shown based on status) -->
+                <HBox fx:id="actionsContainer" spacing="12" alignment="CENTER_RIGHT"
+                      visible="false" managed="false">
+                    <Button fx:id="feedbackBtn" text="Rate Resolution"
+                            onAction="#onFeedbackClick" styleClass="btn-primary"/>
+                    <Button fx:id="reopenBtn" text="Reopen Complaint"
+                            onAction="#onReopenClick" styleClass="btn-secondary"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

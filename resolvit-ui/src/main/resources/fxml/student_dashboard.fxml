@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ResolvIt - Student Dashboard
+  Main dashboard for students showing stats and recent complaints
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.StudentDashboardController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT">
+            <!-- Logo -->
+            <HBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="ResolvIt" styleClass="top-bar-title"/>
+            </HBox>
+            
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <!-- Right Side Icons -->
+            <HBox alignment="CENTER_RIGHT" spacing="16">
+                <!-- Theme Toggle -->
+                <Button fx:id="themeToggleBtn" text="Theme"
+                        onAction="#onToggleTheme" styleClass="btn-icon"/>
+                
+                <!-- Notifications -->
+                <StackPane>
+                    <Button fx:id="notificationsBtn" text="Notifications"
+                            onAction="#onNotificationsClick" styleClass="btn-icon"/>
+                    <Label fx:id="notificationBadge" text="0"
+                           styleClass="notification-badge"
+                           visible="false" managed="false"
+                           StackPane.alignment="TOP_RIGHT"/>
+                </StackPane>
+                
+                <!-- User Menu -->
+                <MenuButton fx:id="userMenuBtn" styleClass="button">
+                    <items>
+                        <MenuItem text="Profile" onAction="#onProfileClick"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="Logout" onAction="#onLogout"/>
+                    </items>
+                </MenuButton>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- Sidebar + Content -->
+    <center>
+        <HBox>
+            <!-- Sidebar -->
+            <VBox fx:id="sidebar" styleClass="sidebar">
+                <!-- Sidebar Header -->
+                <VBox styleClass="sidebar-header">
+                    <Label fx:id="welcomeLabel" text="Welcome!"
+                           styleClass="label-subtitle"/>
+                    <Label fx:id="userInfoLabel" styleClass="label-secondary"/>
+                </VBox>
+
+                <!-- Navigation Items -->
+                <VBox fx:id="navContainer" spacing="4">
+                    <padding>
+                        <Insets top="16"/>
+                    </padding>
+                    
+                    <HBox fx:id="navHome" styleClass="sidebar-item sidebar-item-active"
+                          onMouseClicked="#onNavHome">
+                        <Label text="Home" styleClass="sidebar-item-text"/>
+                    </HBox>
+                    
+                    <HBox fx:id="navNewComplaint" styleClass="sidebar-item"
+                          onMouseClicked="#onNavNewComplaint">
+                        <Label text="New Complaint" styleClass="sidebar-item-text"/>
+                    </HBox>
+                    
+                    <HBox fx:id="navMyComplaints" styleClass="sidebar-item"
+                          onMouseClicked="#onNavMyComplaints">
+                        <Label text="My Complaints" styleClass="sidebar-item-text"/>
+                    </HBox>
+                    
+                    <HBox fx:id="navNotifications" styleClass="sidebar-item"
+                          onMouseClicked="#onNavNotifications">
+                        <Label text="Notifications" styleClass="sidebar-item-text"/>
+                    </HBox>
+                    
+                    <HBox fx:id="navProfile" styleClass="sidebar-item"
+                          onMouseClicked="#onNavProfile">
+                        <Label text="Profile" styleClass="sidebar-item-text"/>
+                    </HBox>
+                </VBox>
+
+                <Region VBox.vgrow="ALWAYS"/>
+
+                <!-- Logout -->
+                <VBox>
+                    <padding>
+                        <Insets bottom="16"/>
+                    </padding>
+                    <HBox styleClass="sidebar-item" onMouseClicked="#onLogout">
+                        <Label text="Logout" styleClass="sidebar-item-text"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Main Content -->
+            <VBox fx:id="mainContent" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets top="24" right="32" bottom="24" left="32"/>
+                </padding>
+
+                <ScrollPane fitToWidth="true" fitToHeight="true"
+                            hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                            VBox.vgrow="ALWAYS">
+                    <VBox spacing="24">
+                        <!-- Dashboard Title -->
+                        <Label fx:id="dashboardTitle" text="My Complaints"
+                               styleClass="label-title"/>
+
+                        <!-- Stat Cards Row -->
+                        <HBox fx:id="statsContainer" spacing="20">
+                            <!-- Total Complaints -->
+                            <VBox styleClass="stat-card stat-card-total" HBox.hgrow="ALWAYS">
+                                <Label fx:id="totalCount" text="0" styleClass="stat-card-value"/>
+                                <Label text="Total Complaints" styleClass="stat-card-label"/>
+                            </VBox>
+                            
+                            <!-- Pending -->
+                            <VBox styleClass="stat-card stat-card-pending" HBox.hgrow="ALWAYS">
+                                <Label fx:id="pendingCount" text="0" styleClass="stat-card-value"/>
+                                <Label text="Pending" styleClass="stat-card-label"/>
+                            </VBox>
+                            
+                            <!-- In Progress -->
+                            <VBox styleClass="stat-card stat-card-progress" HBox.hgrow="ALWAYS">
+                                <Label fx:id="inProgressCount" text="0" styleClass="stat-card-value"/>
+                                <Label text="In Progress" styleClass="stat-card-label"/>
+                            </VBox>
+                            
+                            <!-- Resolved -->
+                            <VBox styleClass="stat-card stat-card-resolved" HBox.hgrow="ALWAYS">
+                                <Label fx:id="resolvedCount" text="0" styleClass="stat-card-value"/>
+                                <Label text="Resolved" styleClass="stat-card-label"/>
+                            </VBox>
+                        </HBox>
+
+                        <!-- Recent Complaints Section -->
+                        <VBox spacing="16">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label text="Recent Complaints" styleClass="label-subtitle"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button text="New Complaint" styleClass="btn-primary"
+                                        onAction="#onNewComplaintClick"/>
+                            </HBox>
+
+                            <!-- Complaints Table -->
+                            <TableView fx:id="complaintsTable" prefHeight="400"
+                                       styleClass="table-view">
+                                <columns>
+                                    <TableColumn fx:id="idColumn" text="ID" prefWidth="80"/>
+                                    <TableColumn fx:id="titleColumn" text="Title" prefWidth="200"/>
+                                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="100"/>
+                                    <TableColumn fx:id="priorityColumn" text="Priority" prefWidth="90"/>
+                                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="110"/>
+                                    <TableColumn fx:id="dateColumn" text="Date" prefWidth="100"/>
+                                    <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+                                </columns>
+                                
+                                <!-- Empty State Placeholder -->
+                                <placeholder>
+                                    <VBox alignment="CENTER" spacing="16" styleClass="empty-state">
+                                        <Label text="No complaints yet" styleClass="empty-state-title"/>
+                                        <Label text="Submit your first complaint to get started"
+                                               styleClass="empty-state-message"/>
+                                        <Button text="Submit Complaint" styleClass="btn-primary"
+                                                onAction="#onNewComplaintClick"/>
+                                    </VBox>
+                                </placeholder>
+                            </TableView>
+                        </VBox>
+                    </VBox>
+                </ScrollPane>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

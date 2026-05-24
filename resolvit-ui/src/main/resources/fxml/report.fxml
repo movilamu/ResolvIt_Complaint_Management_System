@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
+
+<!--
+  ResolvIt - Report Screen
+  Generate and preview PDF reports
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.ReportController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="Generate Reports" styleClass="top-bar-title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <HBox spacing="0">
+            <!-- Report Configuration Panel -->
+            <VBox fx:id="configPanel" styleClass="sidebar" prefWidth="350">
+                <padding>
+                    <Insets top="24" right="24" bottom="24" left="24"/>
+                </padding>
+                <VBox spacing="24">
+                    <Label text="Report Configuration" styleClass="label-subtitle"/>
+
+                    <!-- Report Type -->
+                    <VBox styleClass="form-group" spacing="8">
+                        <Label text="Report Type" styleClass="form-label"/>
+                        <VBox spacing="8">
+                            <RadioButton fx:id="myComplaintsRadio" text="My Complaints Report">
+                                <toggleGroup>
+                                    <ToggleGroup fx:id="reportTypeGroup"/>
+                                </toggleGroup>
+                            </RadioButton>
+                            <RadioButton fx:id="allComplaintsRadio" text="All Complaints Report"
+                                         toggleGroup="$reportTypeGroup"/>
+                            <RadioButton fx:id="departmentRadio" text="Department-wise Report"
+                                         toggleGroup="$reportTypeGroup"/>
+                            <RadioButton fx:id="monthlyRadio" text="Monthly Summary"
+                                         toggleGroup="$reportTypeGroup"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Department Selection (for department report) -->
+                    <VBox fx:id="departmentContainer" styleClass="form-group"
+                          visible="false" managed="false">
+                        <Label text="Select Department" styleClass="form-label"/>
+                        <ComboBox fx:id="departmentComboBox"
+                                  promptText="Choose department"
+                                  styleClass="combo-box" prefWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Date Range -->
+                    <VBox styleClass="form-group" spacing="8">
+                        <Label text="Date Range" styleClass="form-label"/>
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="From" styleClass="form-hint"/>
+                                <DatePicker fx:id="fromDatePicker"/>
+                            </VBox>
+                            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                                <Label text="To" styleClass="form-hint"/>
+                                <DatePicker fx:id="toDatePicker"/>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Filters -->
+                    <VBox styleClass="form-group" spacing="8">
+                        <Label text="Filters (Optional)" styleClass="form-label"/>
+                        
+                        <VBox spacing="8">
+                            <ComboBox fx:id="statusFilterCombo"
+                                      promptText="Filter by Status"
+                                      styleClass="combo-box" prefWidth="Infinity"/>
+                            
+                            <ComboBox fx:id="categoryFilterCombo"
+                                      promptText="Filter by Category"
+                                      styleClass="combo-box" prefWidth="Infinity"/>
+                            
+                            <ComboBox fx:id="priorityFilterCombo"
+                                      promptText="Filter by Priority"
+                                      styleClass="combo-box" prefWidth="Infinity"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Include Options -->
+                    <VBox styleClass="form-group" spacing="8">
+                        <Label text="Include in Report" styleClass="form-label"/>
+                        <VBox spacing="8">
+                            <CheckBox fx:id="includeCharts" text="Charts and Graphs" selected="true"/>
+                            <CheckBox fx:id="includeSummary" text="Summary Statistics" selected="true"/>
+                            <CheckBox fx:id="includeDetails" text="Detailed List" selected="true"/>
+                            <CheckBox fx:id="includeRemarks" text="Admin Remarks"/>
+                        </VBox>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS"/>
+
+                    <!-- Action Buttons -->
+                    <VBox spacing="12">
+                        <Button text="Preview Report" onAction="#onPreviewClick"
+                                styleClass="btn-primary" prefWidth="Infinity"/>
+                        <Button fx:id="downloadBtn" text="Download PDF"
+                                onAction="#onDownloadClick"
+                                styleClass="btn-secondary" prefWidth="Infinity"
+                                disable="true"/>
+                    </VBox>
+                </VBox>
+            </VBox>
+
+            <!-- Report Preview Panel -->
+            <VBox fx:id="previewPanel" HBox.hgrow="ALWAYS">
+                <padding>
+                    <Insets top="24" right="24" bottom="24" left="24"/>
+                </padding>
+
+                <VBox spacing="16" VBox.vgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT">
+                        <Label text="Report Preview" styleClass="label-subtitle"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="previewStatus" text="" styleClass="form-hint"/>
+                    </HBox>
+
+                    <!-- Preview Container -->
+                    <StackPane VBox.vgrow="ALWAYS" styleClass="card">
+                        <!-- Empty State -->
+                        <VBox fx:id="emptyPreview" alignment="CENTER" spacing="16"
+                              styleClass="empty-state">
+                            <Label text="No Preview Available" styleClass="empty-state-title"/>
+                            <Label text="Configure your report options and click 'Preview Report'"
+                                   styleClass="empty-state-message"/>
+                        </VBox>
+
+                        <!-- Loading State -->
+                        <VBox fx:id="loadingPreview" alignment="CENTER" spacing="16"
+                              styleClass="loading-container" visible="false" managed="false">
+                            <ProgressIndicator prefWidth="48" prefHeight="48"
+                                               styleClass="loading-spinner"/>
+                            <Label text="Generating report preview..." styleClass="loading-text"/>
+                        </VBox>
+
+                        <!-- PDF Preview (WebView) -->
+                        <WebView fx:id="previewWebView" visible="false" managed="false"/>
+
+                        <!-- Text Preview (ScrollPane with content) -->
+                        <ScrollPane fx:id="previewScrollPane" visible="false" managed="false"
+                                    fitToWidth="true" hbarPolicy="NEVER">
+                            <VBox fx:id="previewContent" spacing="16">
+                                <padding>
+                                    <Insets top="24" right="24" bottom="24" left="24"/>
+                                </padding>
+                            </VBox>
+                        </ScrollPane>
+                    </StackPane>
+                </VBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ResolvIt - Analytics Dashboard
+  Charts and statistics for admin users
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.AnalyticsController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="Analytics Dashboard" styleClass="top-bar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <!-- Date Range Selector -->
+            <HBox spacing="8" alignment="CENTER_RIGHT">
+                <ToggleButton fx:id="weekBtn" text="This Week"/>
+                <ToggleButton fx:id="monthBtn" text="This Month"/>
+                <ToggleButton fx:id="yearBtn" text="This Year"/>
+                <ToggleButton fx:id="customBtn" text="Custom"/>
+            </HBox>
+            
+            <Button text="Export PDF" onAction="#onExportPDF"
+                    styleClass="btn-primary"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox spacing="24">
+                <padding>
+                    <Insets top="24" right="32" bottom="24" left="32"/>
+                </padding>
+
+                <!-- KPI Cards Row -->
+                <HBox spacing="20">
+                    <!-- Total This Month -->
+                    <VBox styleClass="stat-card stat-card-total" HBox.hgrow="ALWAYS">
+                        <Label fx:id="monthlyTotalValue" text="0" styleClass="stat-card-value"/>
+                        <Label text="Total This Month" styleClass="stat-card-label"/>
+                        <HBox spacing="4" alignment="CENTER_LEFT">
+                            <padding>
+                                <Insets top="8"/>
+                            </padding>
+                            <Label fx:id="monthlyTrend" text="+0%" styleClass="text-success"/>
+                            <Label text="vs last month" styleClass="form-hint"/>
+                        </HBox>
+                    </VBox>
+                    
+                    <!-- Resolved % -->
+                    <VBox styleClass="stat-card stat-card-resolved" HBox.hgrow="ALWAYS">
+                        <Label fx:id="resolvedPercentValue" text="0%" styleClass="stat-card-value"/>
+                        <Label text="Resolution Rate" styleClass="stat-card-label"/>
+                        <ProgressBar fx:id="resolvedProgress" progress="0"
+                                     prefWidth="Infinity">
+                            <padding>
+                                <Insets top="8"/>
+                            </padding>
+                        </ProgressBar>
+                    </VBox>
+                    
+                    <!-- Avg Resolution Time -->
+                    <VBox styleClass="stat-card stat-card-progress" HBox.hgrow="ALWAYS">
+                        <Label fx:id="avgResolutionValue" text="0h" styleClass="stat-card-value"/>
+                        <Label text="Avg Resolution Time" styleClass="stat-card-label"/>
+                        <Label fx:id="avgResolutionTrend" text="" styleClass="form-hint">
+                            <padding>
+                                <Insets top="8"/>
+                            </padding>
+                        </Label>
+                    </VBox>
+                    
+                    <!-- Critical Pending -->
+                    <VBox styleClass="stat-card stat-card-rejected" HBox.hgrow="ALWAYS">
+                        <Label fx:id="criticalPendingValue" text="0" styleClass="stat-card-value"/>
+                        <Label text="Critical Pending" styleClass="stat-card-label"/>
+                        <Label fx:id="criticalPendingNote" text="" styleClass="form-hint">
+                            <padding>
+                                <Insets top="8"/>
+                            </padding>
+                        </Label>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Row 1 -->
+                <HBox spacing="20">
+                    <!-- Bar Chart: Complaints by Category -->
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Complaints by Category" styleClass="label-subtitle"/>
+                        <BarChart fx:id="categoryChart" prefHeight="300">
+                            <xAxis>
+                                <CategoryAxis fx:id="categoryXAxis" label="Category"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="categoryYAxis" label="Count"/>
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+                    
+                    <!-- Pie Chart: Status Distribution -->
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Status Distribution" styleClass="label-subtitle"/>
+                        <PieChart fx:id="statusPieChart" prefHeight="300"
+                                  legendVisible="true" labelsVisible="true"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Row 2 -->
+                <HBox spacing="20">
+                    <!-- Line Chart: Monthly Trend -->
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Monthly Trend (Last 6 Months)" styleClass="label-subtitle"/>
+                        <LineChart fx:id="trendChart" prefHeight="300">
+                            <xAxis>
+                                <CategoryAxis fx:id="trendXAxis" label="Month"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="trendYAxis" label="Complaints"/>
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+                    
+                    <!-- Bar Chart: Top Departments -->
+                    <VBox styleClass="card" HBox.hgrow="ALWAYS">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <Label text="Top 5 Departments by Complaints" styleClass="label-subtitle"/>
+                        <BarChart fx:id="departmentChart" prefHeight="300">
+                            <xAxis>
+                                <CategoryAxis fx:id="deptXAxis" label="Department"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="deptYAxis" label="Count"/>
+                            </yAxis>
+                        </BarChart>
+                    </VBox>
+                </HBox>
+
+                <!-- Priority Distribution -->
+                <VBox styleClass="card">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                    <Label text="Priority Distribution" styleClass="label-subtitle"/>
+                    <HBox spacing="20" alignment="CENTER">
+                        <padding>
+                            <Insets top="16"/>
+                        </padding>
+                        
+                        <VBox alignment="CENTER" spacing="8">
+                            <Label fx:id="lowPriorityCount" text="0" 
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+                            <Label text="Low" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="8">
+                            <Label fx:id="mediumPriorityCount" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #FF9800;"/>
+                            <Label text="Medium" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="8">
+                            <Label fx:id="highPriorityCount" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #F44336;"/>
+                            <Label text="High" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="8">
+                            <Label fx:id="criticalPriorityCount" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #880E4F;"/>
+                            <Label text="Critical" styleClass="form-hint"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

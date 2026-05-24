@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!--
+  ResolvIt - Notifications Screen
+  Lists all notifications for the user
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.NotificationController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="Notifications" styleClass="top-bar-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            
+            <HBox alignment="CENTER_RIGHT" spacing="12">
+                <Label fx:id="unreadCountLabel" text="0 unread"
+                       styleClass="label-secondary"/>
+                <Button text="Mark All Read" onAction="#onMarkAllRead"
+                        styleClass="btn-secondary"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="0">
+            <padding>
+                <Insets top="0" right="0" bottom="24" left="0"/>
+            </padding>
+
+            <!-- Filter Tabs -->
+            <HBox styleClass="filter-bar" alignment="CENTER_LEFT" spacing="8">
+                <ToggleButton fx:id="allFilter" text="All" styleClass="filter-chip"/>
+                <ToggleButton fx:id="unreadFilter" text="Unread" styleClass="filter-chip"/>
+                <ToggleButton fx:id="statusFilter" text="Status Updates" styleClass="filter-chip"/>
+                <ToggleButton fx:id="systemFilter" text="System" styleClass="filter-chip"/>
+            </HBox>
+
+            <ScrollPane fitToWidth="true" fitToHeight="true"
+                        hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+                        VBox.vgrow="ALWAYS">
+                <VBox fx:id="notificationsContainer" spacing="0">
+                    <!-- Notifications will be added dynamically -->
+                    
+                    <!-- Empty State (shown when no notifications) -->
+                    <VBox fx:id="emptyState" alignment="CENTER" spacing="16"
+                          styleClass="empty-state" visible="false" managed="false">
+                        <Label text="No notifications" styleClass="empty-state-title"/>
+                        <Label text="You're all caught up! Check back later for updates."
+                               styleClass="empty-state-message"/>
+                    </VBox>
+                    
+                    <!-- Loading State -->
+                    <VBox fx:id="loadingState" alignment="CENTER" spacing="16"
+                          styleClass="loading-container" visible="false" managed="false">
+                        <ProgressIndicator prefWidth="32" prefHeight="32"
+                                           styleClass="loading-spinner"/>
+                        <Label text="Loading notifications..." styleClass="loading-text"/>
+                    </VBox>
+                </VBox>
+            </ScrollPane>
+
+            <!-- Load More -->
+            <HBox fx:id="loadMoreContainer" alignment="CENTER" visible="false" managed="false">
+                <padding>
+                    <Insets top="16" bottom="16"/>
+                </padding>
+                <Button text="Load More" onAction="#onLoadMore"
+                        styleClass="btn-secondary"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

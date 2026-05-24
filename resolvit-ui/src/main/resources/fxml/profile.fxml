@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<!--
+  ResolvIt - Profile Screen
+  User profile management with password change
+  @author ResolvIt Team
+  @version 1.0.0
+-->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.resolvit.ui.controllers.ProfileController"
+            styleClass="root">
+
+    <!-- Top Bar -->
+    <top>
+        <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="16">
+            <Button fx:id="backBtn" text="Back" onAction="#onBackClick"
+                    styleClass="btn-secondary"/>
+            <Label text="My Profile" styleClass="top-bar-title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+            <VBox alignment="CENTER" spacing="24">
+                <padding>
+                    <Insets top="32" right="32" bottom="32" left="32"/>
+                </padding>
+
+                <!-- Profile Header Card -->
+                <VBox styleClass="card" maxWidth="600" spacing="20" alignment="CENTER">
+                    <padding>
+                        <Insets top="32" right="40" bottom="32" left="40"/>
+                    </padding>
+
+                    <!-- Avatar -->
+                    <StackPane>
+                        <Circle fx:id="avatarCircle" radius="50"
+                                style="-fx-fill: #2E7D32;"/>
+                        <Label fx:id="avatarInitials" text="?"
+                               style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    </StackPane>
+                    
+                    <Button fx:id="uploadPhotoBtn" text="Upload Photo"
+                            onAction="#onUploadPhoto" styleClass="btn-secondary"/>
+                    
+                    <Label fx:id="userNameLabel" text="" styleClass="label-title"/>
+                    <Label fx:id="userRoleLabel" text="" styleClass="label-secondary"/>
+                </VBox>
+
+                <!-- Profile Info Card -->
+                <VBox styleClass="card" maxWidth="600" spacing="20">
+                    <padding>
+                        <Insets top="24" right="40" bottom="24" left="40"/>
+                    </padding>
+
+                    <Label text="Profile Information" styleClass="label-subtitle"/>
+
+                    <VBox spacing="16">
+                        <!-- Full Name -->
+                        <VBox styleClass="form-group">
+                            <Label text="Full Name" styleClass="form-label"/>
+                            <TextField fx:id="nameField" styleClass="text-field"/>
+                        </VBox>
+
+                        <!-- Email (read-only) -->
+                        <VBox styleClass="form-group">
+                            <Label text="Email" styleClass="form-label"/>
+                            <TextField fx:id="emailField" editable="false"
+                                       styleClass="text-field"
+                                       style="-fx-background-color: #F5F5F5;"/>
+                        </VBox>
+
+                        <!-- Phone -->
+                        <VBox styleClass="form-group">
+                            <Label text="Phone Number" styleClass="form-label"/>
+                            <TextField fx:id="phoneField" styleClass="text-field"/>
+                        </VBox>
+
+                        <!-- Roll Number (read-only for students) -->
+                        <HBox spacing="16">
+                            <VBox styleClass="form-group" HBox.hgrow="ALWAYS">
+                                <Label text="Roll Number" styleClass="form-label"/>
+                                <TextField fx:id="rollNumberField" editable="false"
+                                           styleClass="text-field"
+                                           style="-fx-background-color: #F5F5F5;"/>
+                            </VBox>
+                            <VBox styleClass="form-group" HBox.hgrow="ALWAYS">
+                                <Label text="Class" styleClass="form-label"/>
+                                <TextField fx:id="classField" editable="false"
+                                           styleClass="text-field"
+                                           style="-fx-background-color: #F5F5F5;"/>
+                            </VBox>
+                        </HBox>
+
+                        <HBox alignment="CENTER_RIGHT">
+                            <Button fx:id="saveProfileBtn" text="Save Changes"
+                                    onAction="#onSaveProfile" styleClass="btn-primary"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Change Password Card -->
+                <VBox styleClass="card" maxWidth="600" spacing="20">
+                    <padding>
+                        <Insets top="24" right="40" bottom="24" left="40"/>
+                    </padding>
+
+                    <Label text="Change Password" styleClass="label-subtitle"/>
+
+                    <VBox spacing="16">
+                        <!-- Current Password -->
+                        <VBox styleClass="form-group">
+                            <Label text="Current Password" styleClass="form-label"/>
+                            <PasswordField fx:id="currentPasswordField"
+                                           promptText="Enter current password"
+                                           styleClass="text-field"/>
+                        </VBox>
+
+                        <!-- New Password -->
+                        <VBox styleClass="form-group">
+                            <Label text="New Password" styleClass="form-label"/>
+                            <PasswordField fx:id="newPasswordField"
+                                           promptText="Enter new password"
+                                           styleClass="text-field"/>
+                            
+                            <!-- Password Strength Meter -->
+                            <HBox spacing="4" styleClass="password-strength">
+                                <padding>
+                                    <Insets top="8"/>
+                                </padding>
+                                <Region fx:id="pwdStrengthBar1" prefWidth="60" prefHeight="4"
+                                        styleClass="password-strength-bar password-strength-bar-empty"/>
+                                <Region fx:id="pwdStrengthBar2" prefWidth="60" prefHeight="4"
+                                        styleClass="password-strength-bar password-strength-bar-empty"/>
+                                <Region fx:id="pwdStrengthBar3" prefWidth="60" prefHeight="4"
+                                        styleClass="password-strength-bar password-strength-bar-empty"/>
+                                <Region fx:id="pwdStrengthBar4" prefWidth="60" prefHeight="4"
+                                        styleClass="password-strength-bar password-strength-bar-empty"/>
+                            </HBox>
+                            <Label fx:id="pwdStrengthLabel" text="" styleClass="form-hint"/>
+                        </VBox>
+
+                        <!-- Confirm New Password -->
+                        <VBox styleClass="form-group">
+                            <Label text="Confirm New Password" styleClass="form-label"/>
+                            <PasswordField fx:id="confirmPasswordField"
+                                           promptText="Re-enter new password"
+                                           styleClass="text-field"/>
+                            <Label fx:id="passwordMatchLabel" text="" styleClass="form-error"
+                                   visible="false" managed="false"/>
+                        </VBox>
+
+                        <!-- Error/Success Message -->
+                        <Label fx:id="passwordMessage" text="" styleClass="form-error"
+                               visible="false" managed="false"/>
+
+                        <HBox alignment="CENTER_RIGHT">
+                            <Button fx:id="updatePasswordBtn" text="Update Password"
+                                    onAction="#onUpdatePassword" styleClass="btn-primary"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- Stats Summary Card -->
+                <VBox styleClass="card" maxWidth="600" spacing="20">
+                    <padding>
+                        <Insets top="24" right="40" bottom="24" left="40"/>
+                    </padding>
+
+                    <Label text="My Statistics" styleClass="label-subtitle"/>
+
+                    <HBox spacing="24" alignment="CENTER">
+                        <VBox alignment="CENTER" spacing="4">
+                            <Label fx:id="totalComplaintsLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                            <Label text="Total Complaints" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="4">
+                            <Label fx:id="resolvedComplaintsLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;"/>
+                            <Label text="Resolved" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="4">
+                            <Label fx:id="pendingComplaintsLabel" text="0"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #FF6F00;"/>
+                            <Label text="Pending" styleClass="form-hint"/>
+                        </VBox>
+                        
+                        <VBox alignment="CENTER" spacing="4">
+                            <Label fx:id="avgRatingLabel" text="N/A"
+                                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1565C0;"/>
+                            <Label text="Avg Rating Given" styleClass="form-hint"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

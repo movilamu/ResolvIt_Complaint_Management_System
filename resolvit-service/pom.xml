@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.resolvit</groupId>
+        <artifactId>resolvit-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>resolvit-service</artifactId>
+    <name>ResolvIt Service</name>
+    <description>Business logic layer for ResolvIt</description>
+
+    <dependencies>
+        <!-- Core Module -->
+        <dependency>
+            <groupId>com.resolvit</groupId>
+            <artifactId>resolvit-core</artifactId>
+        </dependency>
+
+        <!-- DAO Module -->
+        <dependency>
+            <groupId>com.resolvit</groupId>
+            <artifactId>resolvit-dao</artifactId>
+        </dependency>
+
+        <!-- BCrypt for Password Hashing -->
+        <dependency>
+            <groupId>at.favre.lib</groupId>
+            <artifactId>bcrypt</artifactId>
+        </dependency>
+    </dependencies>
+</project>

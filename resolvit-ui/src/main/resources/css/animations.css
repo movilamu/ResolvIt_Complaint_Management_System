@@ -1,0 +1,321 @@
+/**
+ * ResolvIt - Animation Styles
+ * CSS animations and transitions for the UI
+ * 
+ * @author ResolvIt Team
+ * @version 1.0.0
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   TRANSITION DEFAULTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Note: JavaFX CSS has limited animation support compared to web CSS.
+   Most animations will be handled in Java code using JavaFX Animation API.
+   These styles provide visual cues and static states. */
+
+/* ═══════════════════════════════════════════════════════════════
+   FADE STATES
+   ═══════════════════════════════════════════════════════════════ */
+.fade-in {
+    -fx-opacity: 1.0;
+}
+
+.fade-out {
+    -fx-opacity: 0.0;
+}
+
+.fade-hidden {
+    -fx-opacity: 0.0;
+    visibility: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCALE STATES
+   ═══════════════════════════════════════════════════════════════ */
+.scale-normal {
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.scale-up {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.scale-down {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+.scale-pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SHAKE ANIMATION STATES
+   ═══════════════════════════════════════════════════════════════ */
+.shake-left {
+    -fx-translate-x: -5;
+}
+
+.shake-right {
+    -fx-translate-x: 5;
+}
+
+.shake-center {
+    -fx-translate-x: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE STATES
+   ═══════════════════════════════════════════════════════════════ */
+.slide-in-left {
+    -fx-translate-x: 0;
+}
+
+.slide-out-left {
+    -fx-translate-x: -100%;
+}
+
+.slide-in-right {
+    -fx-translate-x: 0;
+}
+
+.slide-out-right {
+    -fx-translate-x: 100%;
+}
+
+.slide-in-top {
+    -fx-translate-y: 0;
+}
+
+.slide-out-top {
+    -fx-translate-y: -100%;
+}
+
+.slide-in-bottom {
+    -fx-translate-y: 0;
+}
+
+.slide-out-bottom {
+    -fx-translate-y: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PULSE ANIMATION (for current step in timeline)
+   ═══════════════════════════════════════════════════════════════ */
+.pulse {
+    -fx-effect: dropshadow(gaussian, rgba(21, 101, 192, 0.5), 10, 0.5, 0, 0);
+}
+
+.pulse-green {
+    -fx-effect: dropshadow(gaussian, rgba(46, 125, 50, 0.5), 10, 0.5, 0, 0);
+}
+
+.pulse-amber {
+    -fx-effect: dropshadow(gaussian, rgba(255, 111, 0, 0.5), 10, 0.5, 0, 0);
+}
+
+.pulse-red {
+    -fx-effect: dropshadow(gaussian, rgba(183, 28, 28, 0.5), 10, 0.5, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOW EFFECTS
+   ═══════════════════════════════════════════════════════════════ */
+.glow-primary {
+    -fx-effect: dropshadow(gaussian, rgba(46, 125, 50, 0.4), 12, 0, 0, 0);
+}
+
+.glow-accent {
+    -fx-effect: dropshadow(gaussian, rgba(255, 111, 0, 0.4), 12, 0, 0, 0);
+}
+
+.glow-danger {
+    -fx-effect: dropshadow(gaussian, rgba(183, 28, 28, 0.4), 12, 0, 0, 0);
+}
+
+.glow-info {
+    -fx-effect: dropshadow(gaussian, rgba(21, 101, 192, 0.4), 12, 0, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HOVER LIFT EFFECT
+   ═══════════════════════════════════════════════════════════════ */
+.hover-lift {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
+}
+
+.hover-lift:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 16, 0, 0, 6);
+    -fx-translate-y: -2;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LOADING SPINNER ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+.spinner-container {
+    -fx-alignment: center;
+}
+
+.spinner-animation {
+    -fx-progress-color: -primary-color;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTON PRESS ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+.btn-animated:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+.btn-animated:hover {
+    -fx-opacity: 0.9;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NOTIFICATION BADGE
+   ═══════════════════════════════════════════════════════════════ */
+.notification-badge {
+    -fx-background-color: #B71C1C;
+    -fx-text-fill: white;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 10px;
+    -fx-min-width: 18px;
+    -fx-min-height: 18px;
+    -fx-alignment: center;
+}
+
+.notification-badge-pulse {
+    -fx-effect: dropshadow(gaussian, rgba(183, 28, 28, 0.5), 6, 0.5, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RIPPLE EFFECT (visual only, animation in Java)
+   ═══════════════════════════════════════════════════════════════ */
+.ripple-container {
+    -fx-background-color: transparent;
+}
+
+.ripple {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SKELETON LOADING
+   ═══════════════════════════════════════════════════════════════ */
+.skeleton {
+    -fx-background-color: linear-gradient(to right, #E0E0E0 0%, #F5F5F5 50%, #E0E0E0 100%);
+    -fx-background-radius: 4px;
+}
+
+.skeleton-text {
+    -fx-pref-height: 16px;
+    -fx-pref-width: 100%;
+}
+
+.skeleton-title {
+    -fx-pref-height: 24px;
+    -fx-pref-width: 60%;
+}
+
+.skeleton-avatar {
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 50%;
+}
+
+.skeleton-card {
+    -fx-pref-height: 120px;
+    -fx-background-radius: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SUCCESS / ERROR STATES
+   ═══════════════════════════════════════════════════════════════ */
+.input-success {
+    -fx-border-color: #2E7D32;
+    -fx-effect: dropshadow(gaussian, rgba(46, 125, 50, 0.2), 4, 0, 0, 0);
+}
+
+.input-error {
+    -fx-border-color: #B71C1C;
+    -fx-effect: dropshadow(gaussian, rgba(183, 28, 28, 0.2), 4, 0, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOOLTIP ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+.tooltip-animated {
+    -fx-opacity: 0.95;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACCORDION ANIMATION
+   ═══════════════════════════════════════════════════════════════ */
+.accordion-expanded {
+    -fx-max-height: 9999;
+}
+
+.accordion-collapsed {
+    -fx-max-height: 0;
+    -fx-opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOCUS RING
+   ═══════════════════════════════════════════════════════════════ */
+.focus-ring:focused {
+    -fx-effect: dropshadow(gaussian, rgba(46, 125, 50, 0.4), 8, 0, 0, 0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROTATE STATES (for icons like refresh)
+   ═══════════════════════════════════════════════════════════════ */
+.rotate-0 {
+    -fx-rotate: 0;
+}
+
+.rotate-90 {
+    -fx-rotate: 90;
+}
+
+.rotate-180 {
+    -fx-rotate: 180;
+}
+
+.rotate-270 {
+    -fx-rotate: 270;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODAL OVERLAY
+   ═══════════════════════════════════════════════════════════════ */
+.modal-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay-light {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   HIGHLIGHT ANIMATION (for new items)
+   ═══════════════════════════════════════════════════════════════ */
+.highlight-new {
+    -fx-background-color: rgba(46, 125, 50, 0.15);
+}
+
+.highlight-updated {
+    -fx-background-color: rgba(255, 111, 0, 0.15);
+}
+
+.highlight-deleted {
+    -fx-background-color: rgba(183, 28, 28, 0.15);
+}
